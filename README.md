@@ -28,14 +28,14 @@ to understand through traditional mathematical models.
 
 ### Cells:
 
-| Cell           | File                                   | Description                                                                                                                                 |
-|----------------|----------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
-| _Empty cells_  | [empty_cell.py](cells/empty_cell.py)   | _Empty cells_ are default cells for showing nothing.                                                                                        |
-| _Energy cells_ | [energy_cell.py](cells/energy_cell.py) | _Energy cells_ are cells for storing energy which use for increasing cell lifecycle.                                                        |
-| _Green cells_  | [green_cell.py](cells/green_cell.py)   | _Green cells_ are casual cells whose consume energy cells <br/>and reproduce mostly green cells (unlikely can be reproduced _Yellow cell_). |
-| _Yellow cells_ | [yellow_cell.py](cells/yellow_cell.py) | _Yellow cells_ are uncommon cells whose consume energy cells, live longer <br/>and reproduce only yellow cells.                             |
-| _Red cells_    | [red_cell.py](cells/red_cell.py)       | _Red cells_ are aggressive cells whose consume mostly green and yellow cells and unlikely energy cells, reproduce only red cells.           |
-| _Blue cells_   | [blue_cell.py](cells/blue_cell.py)     | _Blue cells_ are kind of poison cells whose poison red, yellow and green cells, reduce their energy.                                        |
+| Cell           | File                                   | Description                                                                                                                             |
+|----------------|----------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| _Empty cells_  | [empty_cell.py](cells/empty_cell.py)   | _Empty cells_ are default cells for showing nothing.                                                                                    |
+| _Energy cells_ | [energy_cell.py](cells/energy_cell.py) | _Energy cells_ are cells for storing energy which use for increasing cell lifecycle.                                                    |
+| _Green cells_  | [green_cell.py](cells/green_cell.py)   | _Green cells_ are casual cells whose consume energy cells <br/>and reproduce mostly green cells (unlikely can reproduce _Yellow cell_). |
+| _Yellow cells_ | [yellow_cell.py](cells/yellow_cell.py) | _Yellow cells_ are uncommon cells whose consume energy cells, live longer <br/>and reproduce only yellow cells.                         |
+| _Red cells_    | [red_cell.py](cells/red_cell.py)       | _Red cells_ are aggressive cells whose consume mostly green and yellow cells and unlikely energy cells, reproduce only red cells.       |
+| _Blue cells_   | [blue_cell.py](cells/blue_cell.py)     | _Blue cells_ are kind of poison cells whose poison red, yellow and green cells, reduce their energy.                                    |
 
 ## Installation
 
