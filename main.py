@@ -1,6 +1,6 @@
 import pygame as pg
 
-from app import App
+from app___src.app import App
 from constants.constants import WIDTH, HEIGHT
 
 
