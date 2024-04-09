@@ -4,20 +4,22 @@ from cells.abstract_cell import Cell, TCell
 from cells.dead_cell import DeadCell
 from cells.empty_cell import EmptyCell
 from cells.energy_cell import EnergyCell
+from cells.green_cell import GreenCell
+from cells.yellow_cell import YellowCell
 from constants.constants import Color
 
 
-class YellowCell(Cell):
+class PurpleCell(Cell):
     neighbors_to_reproduction = 3
     genome = (1, 2, 4)
-    energy_value = 10
-    energy_boost__rate: float = 1.8
-    energy_consumption__rate: float = 1.0
+    energy_value = 20
+    energy_boost__rate: float = 0.75
+    energy_consumption__rate: float = 0.85
     poison_rate: float = 1.2
 
-    def __init__(self, x: int, y: int, color: Color = Color.YELLOW) -> None:
+    def __init__(self, x: int, y: int, color: Color = Color.PURPLE) -> None:
         super().__init__(x, y, color)
-        self.energy_capacity = 300
+        self.energy_capacity = 400
 
     def check_energy_cells(self, cells: List[List[TCell]]) -> int:
         energy: int = 0
@@ -27,7 +29,11 @@ class YellowCell(Cell):
                 ][
                 (self.y + neighbor_position[1]) % len(cells[0])
                 ]
-            if isinstance(neighbor_cell, EnergyCell):
+            if type(neighbor_cell) is GreenCell or type(neighbor_cell) is YellowCell:
+                energy += neighbor_cell.energy_value
+            elif type(neighbor_cell) is DeadCell:
+                energy += neighbor_cell.energy_value
+            elif type(neighbor_cell) is EnergyCell:
                 energy += self.energy_boost__rate * neighbor_cell.energy_value
         return energy
 

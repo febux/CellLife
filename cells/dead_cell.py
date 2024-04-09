@@ -5,10 +5,10 @@ from cells.empty_cell import EmptyCell
 from constants.constants import Color
 
 
-class BlueCell(Cell):
+class DeadCell(Cell):
     energy_value = 10
 
-    def __init__(self, x: int, y: int, color: Color = Color.BLUE) -> None:
+    def __init__(self, x: int, y: int, color: Color = Color.GRAY) -> None:
         super().__init__(x, y, color)
         self.energy_capacity = 50
 

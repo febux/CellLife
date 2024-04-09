@@ -1,7 +1,8 @@
 from typing import List
 
 from cells.abstract_cell import Cell, TCell
-from cells.blue_cell import BlueCell
+from cells.dead_red_cell import DeadRedCell
+from cells.dead_cell import DeadCell
 from cells.empty_cell import EmptyCell
 from cells.energy_cell import EnergyCell
 from cells.green_cell import GreenCell
@@ -15,6 +16,7 @@ class RedCell(Cell):
     energy_value = 30
     energy_boost__rate: float = 0.25
     energy_consumption__rate: float = 1.0
+    poison_rate: float = 2.0
 
     def __init__(self, x: int, y: int, color: Color = Color.RED) -> None:
         super().__init__(x, y, color)
@@ -30,13 +32,15 @@ class RedCell(Cell):
                 ]
             if type(neighbor_cell) is GreenCell or type(neighbor_cell) is YellowCell:
                 energy += neighbor_cell.energy_value
+            elif type(neighbor_cell) is DeadCell:
+                energy += neighbor_cell.energy_value
             elif type(neighbor_cell) is EnergyCell:
                 energy += self.energy_boost__rate * neighbor_cell.energy_value
         return energy
 
     def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
         if self.energy_capacity <= 0:
-            return BlueCell(self.x, self.y)
+            return DeadRedCell(self.x, self.y)
         else:
             neighbors = self.check_neighbors(cells=cells).get(type(self).__name__, [])
             if len(neighbors) not in self.genome:

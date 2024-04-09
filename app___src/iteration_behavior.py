@@ -2,10 +2,11 @@ import random
 from typing import List
 
 from cells.abstract_cell import TCell
-from cells.blue_cell import BlueCell
+from cells.dead_red_cell import DeadRedCell
 from cells.empty_cell import EmptyCell
 from cells.energy_cell import EnergyCell
 from cells.green_cell import GreenCell
+from cells.purple_cell import PurpleCell
 from cells.red_cell import RedCell
 from cells.yellow_cell import YellowCell
 from constants.cell_type__map import CELL_TYPE__MAP
@@ -38,7 +39,10 @@ def iteration_behavior(watched_cell: TCell, cells: List[List[TCell]]) -> TCell:
                     return YellowCell(x, y)
                 elif neighbor_type_cls is RedCell and len(neighbors) == neighbor_type_cls.neighbors_to_reproduction:
                     x, y = watched_cell.x, watched_cell.y
-                    return RedCell(x, y)
+                    return random.choices([RedCell(x, y), PurpleCell(x, y)], weights=(100, 4))[0]
+                elif neighbor_type_cls is PurpleCell and len(neighbors) == neighbor_type_cls.neighbors_to_reproduction:
+                    x, y = watched_cell.x, watched_cell.y
+                    return PurpleCell(x, y)
             return watched_cell
         case 'EnergyCell':
             for neighbor_type, neighbor_type_amount in neighbors_by_types.items():
@@ -46,31 +50,45 @@ def iteration_behavior(watched_cell: TCell, cells: List[List[TCell]]) -> TCell:
                 if neighbor_type_cls is GreenCell or neighbor_type_cls is YellowCell:
                     watched_cell.energy_capacity -= EnergyCell.energy_value
                 if neighbor_type_cls is RedCell:
-                    watched_cell.energy_capacity -= EnergyCell.energy_value / 2
+                    watched_cell.energy_capacity -= EnergyCell.energy_value * RedCell.energy_boost__rate
+                if neighbor_type_cls is PurpleCell:
+                    watched_cell.energy_capacity -= EnergyCell.energy_value * PurpleCell.energy_boost__rate
             return watched_cell.recalculate_cell_energy(cells)
         case 'GreenCell':
             for neighbor_type, neighbor_type_amount in neighbors_by_types.items():
                 neighbor_type_cls = CELL_TYPE__MAP[neighbor_type]
-                if neighbor_type_cls is BlueCell:
-                    watched_cell.energy_capacity -= BlueCell.energy_value
+                if neighbor_type_cls is DeadRedCell:
+                    watched_cell.energy_capacity -= DeadRedCell.energy_value * GreenCell.poison_rate
                 if neighbor_type_cls is RedCell:
                     watched_cell.energy_capacity -= GreenCell.energy_value
             return watched_cell.recalculate_cell_energy(cells)
         case 'YellowCell':
             for neighbor_type, neighbor_type_amount in neighbors_by_types.items():
                 neighbor_type_cls = CELL_TYPE__MAP[neighbor_type]
-                if neighbor_type_cls is BlueCell:
-                    watched_cell.energy_capacity -= BlueCell.energy_value
+                if neighbor_type_cls is DeadRedCell:
+                    watched_cell.energy_capacity -= DeadRedCell.energy_value * YellowCell.poison_rate
                 if neighbor_type_cls is RedCell:
                     watched_cell.energy_capacity -= YellowCell.energy_value
             return watched_cell.recalculate_cell_energy(cells)
         case 'RedCell':
             for neighbor_type, neighbor_type_amount in neighbors_by_types.items():
                 neighbor_type_cls = CELL_TYPE__MAP[neighbor_type]
-                if neighbor_type_cls is BlueCell:
-                    watched_cell.energy_capacity -= BlueCell.energy_value * 2
+                if neighbor_type_cls is DeadRedCell:
+                    watched_cell.energy_capacity -= DeadRedCell.energy_value * RedCell.poison_rate
             return watched_cell.recalculate_cell_energy(cells)
-        case 'BlueCell':
+        case 'PurpleCell':
+            for neighbor_type, neighbor_type_amount in neighbors_by_types.items():
+                neighbor_type_cls = CELL_TYPE__MAP[neighbor_type]
+                if neighbor_type_cls is DeadRedCell:
+                    watched_cell.energy_capacity -= DeadRedCell.energy_value * PurpleCell.poison_rate
+            return watched_cell.recalculate_cell_energy(cells)
+        case 'DeadRedCell':
+            return watched_cell.recalculate_cell_energy(cells)
+        case 'DeadCell':
+            for neighbor_type, neighbor_type_amount in neighbors_by_types.items():
+                neighbor_type_cls = CELL_TYPE__MAP[neighbor_type]
+                if neighbor_type_cls is RedCell:
+                    watched_cell.energy_capacity -= EnergyCell.energy_value
             return watched_cell.recalculate_cell_energy(cells)
         case _:
             return EmptyCell(watched_cell.x, watched_cell.y)

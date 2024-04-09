@@ -5,14 +5,13 @@ import pygame as pg
 from pygame import Surface, SurfaceType
 from pygame.locals import QUIT
 
-from app___src.population import Population
+from app___src.iteration_behavior import iteration_behavior
 from cells.abstract_cell import TCell
 from cells.empty_cell import EmptyCell
 from cells.energy_cell import EnergyCell
 from cells.green_cell import GreenCell
 from cells.red_cell import RedCell
-from constants.constants import CELL_SIZE, Color
-from app___src.iteration_behavior import iteration_behavior
+from constants.constants import CELL_SIZE, Color, population
 
 
 class App:
@@ -40,12 +39,7 @@ class App:
             [
                 random.choices(
                     (EmptyCell(x, y), EnergyCell(x, y), GreenCell(x, y), RedCell(x, y)),
-                    weights=Population(
-                        empty_cell__population=300,
-                        energy_cells__population=10,
-                        green_cells__population=20,
-                        red_cells__population=10,
-                    ).to_tuple(),
+                    weights=population,
                 )[0]
                 for y in range(self.root.get_height() // CELL_SIZE)
             ]
