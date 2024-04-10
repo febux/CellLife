@@ -21,19 +21,15 @@ class App:
 
     iterations = 0
 
-    def __init__(self, width: int, height: int, root: Surface | SurfaceType, *, cell_size: int = CELL_SIZE) -> None:
+    def __init__(self, root: Surface | SurfaceType, *, cell_size: int = CELL_SIZE) -> None:
         """
         The __init__ method initializes the game window, sets up the simulation, and initializes the population.
 
         Args:
-            width (int): The width of the game window.
-            height (int): The height of the game window.
             root (Surface | SurfaceType): The game window.
             cell_size (int, optional): The size of each cell. Defaults to CELL_SIZE.
         """
         self.root = root
-        self.width = width
-        self.height = height
         self.cell_size = cell_size
         self.cells: List[List[TCell]] = [
             [

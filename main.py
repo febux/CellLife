@@ -6,7 +6,7 @@ from constants.constants import WIDTH, HEIGHT
 
 def main():
     root = pg.display.set_mode((WIDTH, HEIGHT))
-    app: App = App(WIDTH, HEIGHT, root)
+    app: App = App(root)
     app.run()
 
 
