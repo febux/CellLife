@@ -25,6 +25,6 @@ population = Population(
     empty_cell__population=300,
     energy_cells__population=10,
     green_cells__population=20,
-    red_cells__population=15,
+    red_cells__population=20,
 ).to_tuple()
 

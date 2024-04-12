@@ -5,18 +5,15 @@ from cells.dead_red_cell import DeadRedCell
 from cells.dead_cell import DeadCell
 from cells.empty_cell import EmptyCell
 from cells.energy_cell import EnergyCell
+from cells.genome.red_cell__genome import RedCellGenome
 from cells.green_cell import GreenCell
 from cells.yellow_cell import YellowCell
 from constants.constants import Color
 
 
 class RedCell(Cell):
-    neighbors_to_reproduction = 3
-    genome = (1, 2, 4)
     energy_value = 30
-    energy_boost__rate: float = 0.25
-    energy_consumption__rate: float = 1.0
-    poison_rate: float = 2.0
+    genome = RedCellGenome
 
     def __init__(self, x: int, y: int, color: Color = Color.RED) -> None:
         super().__init__(x, y, color)
@@ -35,7 +32,7 @@ class RedCell(Cell):
             elif type(neighbor_cell) is DeadCell:
                 energy += neighbor_cell.energy_value
             elif type(neighbor_cell) is EnergyCell:
-                energy += self.energy_boost__rate * neighbor_cell.energy_value
+                energy += self.genome.energy_boost__rate * neighbor_cell.energy_value
         return energy
 
     def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
@@ -43,13 +40,13 @@ class RedCell(Cell):
             return DeadRedCell(self.x, self.y)
         else:
             neighbors = self.check_neighbors(cells=cells).get(type(self).__name__, [])
-            if len(neighbors) not in self.genome:
+            if len(neighbors) not in self.genome.neighbors_amounts_to_kill:
                 return EmptyCell(self.x, self.y)
 
             if energy_value := self.check_energy_cells(cells=cells):
                 self.energy_capacity += energy_value
 
-            self.energy_capacity -= self.energy_consumption__rate * self.energy_value
+            self.energy_capacity -= self.genome.energy_consumption__rate * self.energy_value
             return self
 
     @property

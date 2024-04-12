@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 
 from typing import List, Tuple, Optional, Dict, TypeVar
+
+from cells.genome.abstract_genome import BaseGenome
 from constants.constants import Color, CELL_SIZE
 
 TCell = TypeVar("TCell", bound="Cell")
@@ -15,19 +17,18 @@ class Cell(ABC):
         y (int): y-coordinate of the cell
         color (Color): color of the cell
         size (int): size of the cell type
-        energy_capacity (Optional[int]): maximum energy capacity of the cell
-        genome (Optional[Tuple[int,...]]): genetic code of the cell type
-        neighbors_to_reproduction (Optional[int]): number of alive neighbors required for reproduction of the cell type
+        energy_value (int): current energy value of the cell type
+        energy_capacity (int): maximum energy capacity of the cell
         neighbor_positions (Tuple[Tuple[int, int]]): array of neighbors' positions over the cell type
-        energy_value (Optional[int]): current energy value of the cell type
+        genome (Optional[BaseGenome]): base genome of the cell
 
     """
 
     neighbor_positions: Tuple[Tuple[int, int]] = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
     size: int = CELL_SIZE
-    genome: Optional[Tuple[int, ...]] = None
-    neighbors_to_reproduction: Optional[int] = None
-    energy_value: Optional[int] = 0
+    energy_value: int = 0
+
+    genome: Optional[BaseGenome] = None
 
     def __init__(self, x: int, y: int, color: Color):
         """
@@ -42,7 +43,7 @@ class Cell(ABC):
         self.x = x
         self.y = y
         self.color = color
-        self.energy_capacity: Optional[int] = None
+        self.energy_capacity: int = 0
 
     def check_neighbors(self, cells: List[List[TCell]]) -> Dict[str, List[TCell]]:
         """

@@ -10,7 +10,7 @@ class DeadRedCell(Cell):
 
     def __init__(self, x: int, y: int, color: Color = Color.BLUE) -> None:
         super().__init__(x, y, color)
-        self.energy_capacity = 50
+        self.energy_capacity = 30
 
     def check_energy_cells(self, cells: List[List[TCell]] = None) -> int:
         return 0
