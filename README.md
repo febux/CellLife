@@ -13,13 +13,6 @@ In this simulation, the cells are represented as squares on a grid,
 and their behavior is determined by a set of rules that determine 
 how cells change state based on the states of their neighboring cells.
 
-The simulation can be run in either real-time or time-lapse mode, 
-and the user can adjust the speed of the simulation, 
-as well as the size of the grid and the number of cells in the population. 
-
-The simulation also includes an option to save a screenshot 
-of the simulation at regular intervals.
-
 This application is designed to be a tool for exploring the principles 
 of cellular automata and to provide a visual representation 
 of complex systems that can be difficult 
