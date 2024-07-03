@@ -1,17 +1,13 @@
-import random
 from typing import List
 
 import pygame as pg
-from pygame import Surface, SurfaceType
+from pygame import Surface, SurfaceType, time
 from pygame.locals import QUIT
 
-from app___src.iteration_behavior import iteration_behavior
+from app___src.cells_generator import field_cells_generator, temp_cells_generator
 from cells.abstract_cell import TCell
-from cells.empty_cell import EmptyCell
-from cells.energy_cell import EnergyCell
-from cells.green_cell import GreenCell
-from cells.red_cell import RedCell
-from constants.constants import CELL_SIZE, Color, population
+from constants.constants import CELL_SIZE, FPS
+from constants.colors import Color
 
 
 class App:
@@ -31,16 +27,9 @@ class App:
         """
         self.root = root
         self.cell_size = cell_size
-        self.cells: List[List[TCell]] = [
-            [
-                random.choices(
-                    (EmptyCell(x, y), EnergyCell(x, y), GreenCell(x, y), RedCell(x, y)),
-                    weights=population,
-                )[0]
-                for y in range(self.root.get_height() // CELL_SIZE)
-            ]
-            for x in range(self.root.get_width() // CELL_SIZE)
-        ]
+        self.cells: List[List[TCell]] = field_cells_generator(root, cell_size=cell_size)
+        self.clock = time.Clock()
+        self.clock.tick(FPS)
 
     def draw_cells(self) -> None:
         """
@@ -61,12 +50,26 @@ class App:
         Returns:
             List[List[TCell]]: The next generation of cells.
         """
-        temp_res_cells: List[List[TCell]] = [[EmptyCell(x, y) for y in range(len(self.cells[0]))]
-                                             for x in range(len(self.cells))]
+        temp_res_cells: List[List[TCell]] = temp_cells_generator(self.cells)
         for x in range(len(self.cells)):
             for y in range(len(self.cells[0])):
-                temp_res_cells[x][y] = iteration_behavior(self.cells[x][y], cells=self.cells)
+                temp_res_cells[x][y] = self.iteration_behavior(self.cells[x][y])
         return temp_res_cells
+
+    def iteration_behavior(self, watched_cell: TCell) -> TCell:
+        """
+        This method is used to iterate over the cells in the array and return calculated behavior of each cell
+
+        Parameters:
+        watched_cell (TCell): The current cell to iterate over in the iteration
+        cells (List[List[TCell]]): The cells array to iterate over in the iteration
+
+        Returns:
+        TCell: The calculated behavior of cell to iterate over in the iteration
+        """
+        neighbors_by_types = watched_cell.check_neighbors(cells=self.cells)
+
+        return watched_cell.cell_iteration(neighbors_by_types, cells=self.cells)
 
     def run(self) -> None:
         """

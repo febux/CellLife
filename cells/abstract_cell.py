@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import List, Tuple, Optional, Dict, TypeVar
 
 from cells.genome.abstract_genome import BaseGenome
-from constants.constants import Color, CELL_SIZE
+from constants import Color, CELL_SIZE
 
 TCell = TypeVar("TCell", bound="Cell")
 
@@ -93,6 +93,10 @@ class Cell(ABC):
 
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+        ...
 
     @property
     @abstractmethod

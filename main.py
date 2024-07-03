@@ -1,7 +1,7 @@
 import pygame as pg
 
 from app___src.app import App
-from constants.constants import WIDTH, HEIGHT
+from constants import WIDTH, HEIGHT
 
 
 def main():

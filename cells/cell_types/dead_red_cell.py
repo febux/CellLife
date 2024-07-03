@@ -1,8 +1,7 @@
-from typing import List
+from typing import List, Dict
 
 from cells.abstract_cell import Cell, TCell
-from cells.empty_cell import EmptyCell
-from constants.constants import Color
+from constants import Color
 
 
 class DeadRedCell(Cell):
@@ -16,11 +15,16 @@ class DeadRedCell(Cell):
         return 0
 
     def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
+        from cells.cell_type_enum import CellType
+
         if self.energy_capacity <= 0:
-            return EmptyCell(self.x, self.y)
+            return CellType.EmptyCell.class_(self.x, self.y)
         else:
             self.energy_capacity -= 10
             return self
+
+    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+        return self.recalculate_cell_energy(cells)
 
     @property
     def cell_liveness(self) -> bool:
