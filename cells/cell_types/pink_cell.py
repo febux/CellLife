@@ -31,7 +31,7 @@ class PinkCell(Cell):
             elif neighbor_type == CellType.DeadCell.value:
                 energy += neighbor_cell.energy_value
             elif neighbor_type == CellType.EnergyCell.value:
-                energy += self.genome.energy_boost__rate * neighbor_cell.energy_value
+                energy += self.genome.energy_boost_rate * neighbor_cell.energy_value
         return energy
 
     def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
@@ -47,7 +47,7 @@ class PinkCell(Cell):
             if energy_value := self.check_energy_cells(cells=cells):
                 self.energy_capacity += energy_value
 
-            self.energy_capacity -= self.genome.energy_consumption__rate * self.energy_value
+            self.energy_capacity -= self.genome.energy_consumption_rate * self.energy_value
             return self
 
     def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:

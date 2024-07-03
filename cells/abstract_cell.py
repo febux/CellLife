@@ -20,7 +20,7 @@ class Cell(ABC):
         energy_value (int): current energy value of the cell type
         energy_capacity (int): maximum energy capacity of the cell
         neighbor_positions (Tuple[Tuple[int, int]]): array of neighbors' positions over the cell type
-        genome (Optional[BaseGenome]): base genome of the cell
+        genome (Optional[BaseGenome]): the genome of the cell
 
     """
 

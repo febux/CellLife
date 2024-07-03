@@ -4,13 +4,31 @@ from typing import Optional, Tuple
 
 @dataclass
 class BaseGenome:
+    """
+    A class representing the base genome of a cellular automaton.
+
+    Attributes:
+        neighbors_amounts_to_kill: A tuple of integers representing the number of neighbors to kill.
+        neighbors_to_reproduction: An integer representing the number of neighbors needed for reproduction.
+        energy_boost_rate: A float representing the rate of energy boost.
+        cell_boost_rate: A float representing the rate of cell boost.
+        energy_consumption_rate: A float representing the rate of energy consumption.
+        poison_rate: A float representing the rate of poison.
+    """
+
     neighbors_amounts_to_kill: Optional[Tuple[int, ...]] = None
     neighbors_to_reproduction: Optional[int] = None
 
-    energy_boost__rate: Optional[float] = None
-    cell_boost__rate: Optional[float] = None
-    energy_consumption__rate: Optional[float] = None
+    energy_boost_rate: Optional[float] = None
+    cell_boost_rate: Optional[float] = None
+    energy_consumption_rate: Optional[float] = None
     poison_rate: Optional[float] = None
 
-    def to_bytes(self):
-        pass
+    def to_bytes(self) -> bytes:
+        """
+        Converts the genome instance into bytes.
+
+        Returns:
+        bytes: The byte representation of the genome instance.
+        """
+        ...

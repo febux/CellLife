@@ -25,7 +25,7 @@ class OrangeCell(Cell):
                 ]
             neighbor_type = type(neighbor_cell).__name__
             if neighbor_type == CellType.EnergyCell.value:
-                energy += self.genome.energy_boost__rate * neighbor_cell.energy_value
+                energy += self.genome.energy_boost_rate * neighbor_cell.energy_value
         return energy
 
     def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
@@ -41,7 +41,7 @@ class OrangeCell(Cell):
             if energy_value := self.check_energy_cells(cells=cells):
                 self.energy_capacity += energy_value
 
-            self.energy_capacity -= self.genome.energy_consumption__rate * self.energy_value
+            self.energy_capacity -= self.genome.energy_consumption_rate * self.energy_value
             return self
 
     def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
@@ -52,9 +52,9 @@ class OrangeCell(Cell):
             if neighbor_type in CellType.get_poison_cells():
                 self.energy_capacity -= self.energy_value * self.genome.poison_rate
             elif neighbor_type in CellType.get_predators():
-                self.energy_capacity -= self.energy_value * neighbor_type_cls.genome.cell_boost__rate
+                self.energy_capacity -= self.energy_value * neighbor_type_cls.genome.cell_boost_rate
             elif neighbor_type in CellType.get_super_predators():
-                self.energy_capacity -= self.energy_value * neighbor_type_cls.genome.cell_boost__rate
+                self.energy_capacity -= self.energy_value * neighbor_type_cls.genome.cell_boost_rate
         return self.recalculate_cell_energy(cells)
 
     @property

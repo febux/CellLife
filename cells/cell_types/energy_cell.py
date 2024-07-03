@@ -28,7 +28,7 @@ class EnergyCell(Cell):
         for neighbor_type, neighbor_type_amount in neighbors.items():
             neighbor_type_cls = CellType(neighbor_type).class_
             if neighbor_type in CellType.get_energy_consumers():
-                self.energy_capacity -= self.energy_value * neighbor_type_cls.genome.energy_boost__rate
+                self.energy_capacity -= self.energy_value * neighbor_type_cls.genome.energy_boost_rate
         return self.recalculate_cell_energy(cells)
 
     @property
