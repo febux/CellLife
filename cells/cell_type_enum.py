@@ -1,6 +1,9 @@
 from enum import Enum
-from typing import Tuple
 import importlib
+from typing import Type
+
+from cells.abstract_cell import TCell
+from constants.type_alias import CellArray
 
 
 class CellType(Enum):
@@ -49,35 +52,34 @@ class CellType(Enum):
         return obj
 
     @property
-    def class_(self):
+    def class_(self) -> Type[TCell]:
         """
         The class of the Enum member.
 
         Returns:
         class: The class corresponding to the Enum value.
         """
-        # return self._class_
         return self.cell_type__map[self.value]
 
     @classmethod
-    def get_poison_cells(cls) -> Tuple[str, ...]:
+    def get_poison_cells(cls) -> CellArray:
         """
         Get the names of poison cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of poison cells.
+        CellArray: A tuple containing the names of poison cells.
         """
         return (
             cls.DeadRedCell.value,
         )
 
     @classmethod
-    def get_mutable_cells(cls) -> Tuple[str, ...]:
+    def get_mutable_cells(cls) -> CellArray:
         """
         Get the names of mutable cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of mutable cells.
+        CellArray: A tuple containing the names of mutable cells.
         """
         return (
             cls.RedCell.value,
@@ -87,24 +89,24 @@ class CellType(Enum):
         )
 
     @classmethod
-    def get_immutable_cells(cls) -> Tuple[str, ...]:
+    def get_immutable_cells(cls) -> CellArray:
         """
         Get the names of immutable cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of immutable cells.
+        CellArray: A tuple containing the names of immutable cells.
         """
         return (
             cls.PinkCell.value,
         )
 
     @classmethod
-    def get_predators(cls) -> Tuple[str, ...]:
+    def get_predators(cls) -> CellArray:
         """
         Get the names of predator cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of predator cells.
+        CellArray: A tuple containing the names of predator cells.
         """
         return (
             cls.PurpleCell.value,
@@ -112,24 +114,24 @@ class CellType(Enum):
         )
 
     @classmethod
-    def get_super_predators(cls) -> Tuple[str, ...]:
+    def get_super_predators(cls) -> CellArray:
         """
         Get the names of super predator cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of super predator cells.
+        CellArray: A tuple containing the names of super predator cells.
         """
         return (
             cls.PinkCell.value,
         )
 
     @classmethod
-    def get_herbivores(cls) -> Tuple[str, ...]:
+    def get_herbivores(cls) -> CellArray:
         """
         Get the names of herbivore cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of herbivore cells.
+        CellArray: A tuple containing the names of herbivore cells.
         """
         return (
             cls.GreenCell.value,
@@ -138,12 +140,12 @@ class CellType(Enum):
         )
 
     @classmethod
-    def get_energy_consumers(cls) -> Tuple[str, ...]:
+    def get_energy_consumers(cls) -> CellArray:
         """
         Get the names of energy consumer cells.
 
         Returns:
-        Tuple[str, ...]: A tuple containing the names of energy consumer cells.
+        CellArray: A tuple containing the names of energy consumer cells.
         """
         return (
             cls.GreenCell.value,

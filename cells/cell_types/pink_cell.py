@@ -1,8 +1,9 @@
-from typing import List, Dict
+from typing import Dict
 
 from cells.abstract_cell import Cell, TCell
 from cells.genome.pink_cell__genome import PinkCellGenome
 from constants import Color
+from constants.type_alias import Matrix, Vector
 
 
 class PinkCell(Cell):
@@ -11,9 +12,9 @@ class PinkCell(Cell):
 
     def __init__(self, x: int, y: int, color: Color = Color.PINK) -> None:
         super().__init__(x, y, color)
-        self.energy_capacity = 400
+        self.energy_capacity = self.genome.energy_capacity
 
-    def check_energy_cells(self, cells: List[List[TCell]]) -> int:
+    def check_energy_cells(self, cells: Matrix) -> int:
         from cells.cell_type_enum import CellType
 
         energy: int = 0
@@ -34,7 +35,7 @@ class PinkCell(Cell):
                 energy += self.genome.energy_boost_rate * neighbor_cell.energy_value
         return energy
 
-    def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
+    def recalculate_cell_energy(self, cells: Matrix) -> TCell:
         from cells.cell_type_enum import CellType
 
         if self.energy_capacity <= 0:
@@ -50,7 +51,7 @@ class PinkCell(Cell):
             self.energy_capacity -= self.genome.energy_consumption_rate * self.energy_value
             return self
 
-    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+    def cell_iteration(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
         from cells.cell_type_enum import CellType
 
         for neighbor_type, neighbor_type_amount in neighbors.items():

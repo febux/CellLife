@@ -1,7 +1,8 @@
-from typing import List, Dict
+from typing import Dict
 
 from cells.abstract_cell import Cell, TCell
 from constants import Color
+from constants.type_alias import Matrix, Vector
 
 
 class EnergyCell(Cell):
@@ -11,10 +12,10 @@ class EnergyCell(Cell):
         super().__init__(x, y, color)
         self.energy_capacity = 20
 
-    def check_energy_cells(self, cells: List[List[TCell]] = None) -> int:
+    def check_energy_cells(self, cells: Matrix = None) -> int:
         return 0
 
-    def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
+    def recalculate_cell_energy(self, cells: Matrix) -> TCell:
         from cells.cell_type_enum import CellType
 
         if self.energy_capacity <= 0:
@@ -22,7 +23,7 @@ class EnergyCell(Cell):
         else:
             return self
 
-    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+    def cell_iteration(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
         from cells.cell_type_enum import CellType
 
         for neighbor_type, neighbor_type_amount in neighbors.items():

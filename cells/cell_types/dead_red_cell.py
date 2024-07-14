@@ -2,6 +2,8 @@ from typing import List, Dict
 
 from cells.abstract_cell import Cell, TCell
 from constants import Color
+from constants.constants import ENERGY_ITERATION_VALUE
+from constants.type_alias import Matrix, Vector
 
 
 class DeadRedCell(Cell):
@@ -11,19 +13,19 @@ class DeadRedCell(Cell):
         super().__init__(x, y, color)
         self.energy_capacity = 30
 
-    def check_energy_cells(self, cells: List[List[TCell]] = None) -> int:
+    def check_energy_cells(self, cells: Matrix = None) -> int:
         return 0
 
-    def recalculate_cell_energy(self, cells: List[List[TCell]]) -> TCell:
+    def recalculate_cell_energy(self, cells: Matrix) -> TCell:
         from cells.cell_type_enum import CellType
 
         if self.energy_capacity <= 0:
             return CellType.EmptyCell.class_(self.x, self.y)
         else:
-            self.energy_capacity -= 10
+            self.energy_capacity -= ENERGY_ITERATION_VALUE
             return self
 
-    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+    def cell_iteration(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
         return self.recalculate_cell_energy(cells)
 
     @property

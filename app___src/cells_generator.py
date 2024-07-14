@@ -1,14 +1,13 @@
 import random
-from typing import List
 
 from pygame import Surface, SurfaceType
 
-from cells.abstract_cell import TCell
 from cells.cell_type_enum import CellType
 from constants.constants import POPULATION, CELL_SIZE
+from constants.type_alias import Matrix
 
 
-def field_cells_generator(root: Surface | SurfaceType, *, cell_size: int = CELL_SIZE):
+def field_cells_generator(root: Surface | SurfaceType, *, cell_size: int = CELL_SIZE) -> Matrix:
     """
     This function generates a 2D list of cells representing the game field.
 
@@ -17,7 +16,7 @@ def field_cells_generator(root: Surface | SurfaceType, *, cell_size: int = CELL_
     cell_size (int): The size of each cell in the game field. Default is the value of CELL_SIZE constant.
 
     Returns:
-    List[List[TCell]]: A 2D list of cells where each cell is an instance of a subclass of TCell.
+    Matrix: A 2D list of cells where each cell is an instance of a subclass of TCell.
 
     The function uses the random.choices() function to randomly select a cell type from the list of
     possible cell types (EmptyCell, EnergyCell, GreenCell, RedCell) based on the weights defined in the
@@ -39,7 +38,3 @@ def field_cells_generator(root: Surface | SurfaceType, *, cell_size: int = CELL_
         ]
         for x in range(root.get_width() // cell_size)
     ]
-
-
-def temp_cells_generator(cells: List[List[TCell]]):
-    return [[CellType.EmptyCell.class_(x, y) for y in range(len(cells[0]))] for x in range(len(cells))]

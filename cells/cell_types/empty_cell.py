@@ -1,20 +1,21 @@
-from typing import List, Dict
+from typing import Dict
 
 from cells.abstract_cell import Cell, TCell
 from constants.colors import Color
+from constants.type_alias import Matrix, Vector
 
 
 class EmptyCell(Cell):
     def __init__(self, x: int, y: int, color: Color = Color.BLACK) -> None:
         super().__init__(x, y, color)
 
-    def check_energy_cells(self, cells: List[List[TCell]] = None) -> int:
+    def check_energy_cells(self, cells: Matrix = None) -> int:
         return 0
 
-    def recalculate_cell_energy(self, cells: List[List[TCell]]) -> None:
+    def recalculate_cell_energy(self, cells: Matrix) -> None:
         pass
 
-    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+    def cell_iteration(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
         from cells.cell_type_enum import CellType
 
         for neighbor_type, neighbor_type_amount in neighbors.items():
