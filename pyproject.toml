@@ -1,14 +1,14 @@
 [tool.poetry]
 name = "life-sim"
 version = "0.1.0"
-description = ""
+description = "Application for simulating cell selection"
 authors = ["san <deadcove@mail.ru>"]
+maintainers = ["san <deadcove@mail.ru>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pygame = "^2.5.2"
-defaultlist = "^1.0.0"
 
 
 [build-system]
