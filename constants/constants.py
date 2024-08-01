@@ -11,5 +11,5 @@ POPULATION: Population = Population(
     energy_cells__population=10,
     green_cells__population=20,
     red_cells__population=20,
-).to_tuple()
+)
 

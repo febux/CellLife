@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Tuple
 
 
 @dataclass
@@ -20,7 +21,7 @@ class Population:
         self.green_cells__population = green_cells__population
         self.red_cells__population = red_cells__population
 
-    def to_tuple(self):
+    def to_tuple(self) -> Tuple[int, int, int, int]:
         return (
             self.empty_cell__population,
             self.energy_cells__population,

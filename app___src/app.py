@@ -1,13 +1,12 @@
-from typing import List
+import sys
 
 import pygame as pg
 from pygame import Surface, SurfaceType, time
-from pygame.locals import QUIT
 
 from app___src.cells_generator import field_cells_generator
-from cells.abstract_cell import TCell
-from constants.constants import CELL_SIZE, FPS
+from cells.cell_types.abstract_cell import TCell
 from constants.colors import Color
+from constants.constants import CELL_SIZE, FPS
 from constants.type_alias import Matrix
 
 
@@ -35,9 +34,12 @@ class App:
         self.app_width: int = root.get_width()
         self.app_height: int = root.get_height()
         self.cell_size = cell_size
-        self.cells: Matrix = field_cells_generator(root, cell_size=cell_size)
+        self.cells: Matrix = []
+
         self.clock = time.Clock()
         self.clock.tick(FPS)
+
+        self.start_game()
 
     def draw_cells(self) -> None:
         """
@@ -77,7 +79,16 @@ class App:
         """
         neighbors_by_types = watched_cell.check_neighbors(cells=self.cells)
 
-        return watched_cell.cell_iteration(neighbors_by_types, cells=self.cells)
+        return watched_cell.cell_iteration_behavior(neighbors_by_types, cells=self.cells)
+
+    def event_listener(self):
+        for event in pg.event.get():
+            if event.type == pg.KEYDOWN:
+                match event.key:
+                    case pg.K_ESCAPE:
+                        self.exit_game()
+                    case pg.K_r:
+                        self.start_game()
 
     def run(self) -> None:
         """
@@ -85,9 +96,8 @@ class App:
         """
         while True:
             self.root.fill(Color.WHITE.value)
-            for i in pg.event.get():
-                if i.type == QUIT:
-                    quit()
+
+            self.event_listener()
 
             self.draw_cells()
 
@@ -96,3 +106,11 @@ class App:
             self.cells = self.recalculate_cells__iteration()
 
             self.iterations += 1
+
+    @staticmethod
+    def exit_game():
+        pg.quit()
+        sys.exit(0)
+
+    def start_game(self):
+        self.cells: Matrix = field_cells_generator(self.root, cell_size=self.cell_size)

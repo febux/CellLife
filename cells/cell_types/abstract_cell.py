@@ -8,7 +8,7 @@ from constants import Color, CELL_SIZE
 TCell = TypeVar("TCell", bound="Cell")
 
 
-class Cell(ABC):
+class BaseCell(ABC):
     """
     Abstract class representing a cell in a Conway's Game of Life simulation.
 
@@ -24,7 +24,10 @@ class Cell(ABC):
 
     """
 
-    neighbor_positions: Tuple[Tuple[int, int]] = ((-1, -1), (-1, 0), (-1, 1), (0, -1), (0, 1), (1, -1), (1, 0), (1, 1))
+    neighbor_positions: Tuple[Tuple[int, int], ...] = (
+        (-1, -1), (-1, 0), (-1, 1), (0, -1),
+        (0, 1), (1, -1), (1, 0), (1, 1),
+    )
     size: int = CELL_SIZE
     energy_value: int = 0
 
@@ -95,7 +98,7 @@ class Cell(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def cell_iteration(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
+    def cell_iteration_behavior(self, neighbors: Dict[str, List[TCell]], cells: List[List[TCell]]) -> TCell:
         ...
 
     @property

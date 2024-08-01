@@ -2,11 +2,11 @@ from enum import Enum
 import importlib
 from typing import Type
 
-from cells.abstract_cell import TCell
+from cells.cell_types.abstract_cell import TCell
 from constants.type_alias import CellArray
 
 
-class CellType(Enum):
+class CellTypeCatalog(Enum):
     EmptyCell = 'EmptyCell'
     EnergyCell = 'EnergyCell'
     GreenCell = 'GreenCell'

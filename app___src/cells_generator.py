@@ -2,7 +2,7 @@ import random
 
 from pygame import Surface, SurfaceType
 
-from cells.cell_type_enum import CellType
+from cells.cell_type_enum import CellTypeCatalog
 from constants.constants import POPULATION, CELL_SIZE
 from constants.type_alias import Matrix
 
@@ -27,12 +27,12 @@ def field_cells_generator(root: Surface | SurfaceType, *, cell_size: int = CELL_
         [
             random.choices(
                 (
-                    CellType.EmptyCell.class_(x, y),
-                    CellType.EnergyCell.class_(x, y),
-                    CellType.GreenCell.class_(x, y),
-                    CellType.RedCell.class_(x, y)
+                    CellTypeCatalog.EmptyCell.class_(x, y),
+                    CellTypeCatalog.EnergyCell.class_(x, y),
+                    CellTypeCatalog.GreenCell.class_(x, y),
+                    CellTypeCatalog.RedCell.class_(x, y)
                 ),
-                weights=POPULATION,
+                weights=POPULATION.to_tuple(),
             )[0]
             for y in range(root.get_height() // cell_size)
         ]

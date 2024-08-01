@@ -1,12 +1,12 @@
 from typing import Dict
 
-from cells.abstract_cell import Cell, TCell
-from cells.genome.pink_cell__genome import PinkCellGenome
+from cells.cell_types.abstract_cell import BaseCell, TCell
+from cells.genome import PinkCellGenome
 from constants import Color
 from constants.type_alias import Matrix, Vector
 
 
-class PinkCell(Cell):
+class PinkCell(BaseCell):
     energy_value = 20
     genome = PinkCellGenome
 
@@ -15,7 +15,7 @@ class PinkCell(Cell):
         self.energy_capacity = self.genome.energy_capacity
 
     def check_energy_cells(self, cells: Matrix) -> int:
-        from cells.cell_type_enum import CellType
+        from cells.cell_type_enum import CellTypeCatalog
 
         energy: int = 0
         for neighbor_position in self.neighbor_positions:
@@ -25,25 +25,25 @@ class PinkCell(Cell):
                 (self.y + neighbor_position[1]) % len(cells[0])
                 ]
             neighbor_type = type(neighbor_cell).__name__
-            if neighbor_type in CellType.get_herbivores():
+            if neighbor_type in CellTypeCatalog.get_herbivores():
                 energy += neighbor_cell.energy_value
-            elif neighbor_type in CellType.get_predators():
+            elif neighbor_type in CellTypeCatalog.get_predators():
                 energy += neighbor_cell.energy_value
-            elif neighbor_type == CellType.DeadCell.value:
+            elif neighbor_type == CellTypeCatalog.DeadCell.value:
                 energy += neighbor_cell.energy_value
-            elif neighbor_type == CellType.EnergyCell.value:
+            elif neighbor_type == CellTypeCatalog.EnergyCell.value:
                 energy += self.genome.energy_boost_rate * neighbor_cell.energy_value
         return energy
 
     def recalculate_cell_energy(self, cells: Matrix) -> TCell:
-        from cells.cell_type_enum import CellType
+        from cells.cell_type_enum import CellTypeCatalog
 
         if self.energy_capacity <= 0:
-            return CellType.DeadCell.class_(self.x, self.y)
+            return CellTypeCatalog.DeadCell.class_(self.x, self.y)
         else:
             neighbors = self.check_neighbors(cells=cells).get(type(self).__name__, [])
             if len(neighbors) not in self.genome.neighbors_amounts_to_kill:
-                return CellType.EmptyCell.class_(self.x, self.y)
+                return CellTypeCatalog.EmptyCell.class_(self.x, self.y)
 
             if energy_value := self.check_energy_cells(cells=cells):
                 self.energy_capacity += energy_value
@@ -51,11 +51,11 @@ class PinkCell(Cell):
             self.energy_capacity -= self.genome.energy_consumption_rate * self.energy_value
             return self
 
-    def cell_iteration(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
-        from cells.cell_type_enum import CellType
+    def cell_iteration_behavior(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
+        from cells.cell_type_enum import CellTypeCatalog
 
         for neighbor_type, neighbor_type_amount in neighbors.items():
-            if neighbor_type in CellType.get_poison_cells():
+            if neighbor_type in CellTypeCatalog.get_poison_cells():
                 self.energy_capacity -= self.energy_value * self.genome.poison_rate
         return self.recalculate_cell_energy(cells)
 

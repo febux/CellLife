@@ -25,12 +25,3 @@ class BaseGenome:
     cell_boost_rate: Optional[float] = None
     energy_consumption_rate: Optional[float] = None
     poison_rate: Optional[float] = None
-
-    def to_bytes(self) -> bytes:
-        """
-        Converts the genome instance into bytes.
-
-        Returns:
-        bytes: The byte representation of the genome instance.
-        """
-        ...

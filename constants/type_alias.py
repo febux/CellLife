@@ -1,6 +1,6 @@
 from typing import List, TypeAlias, Tuple
 
-from cells.abstract_cell import TCell
+from cells.cell_types.abstract_cell import TCell
 
 Vector: TypeAlias = List[TCell]
 Matrix: TypeAlias = List[Vector]

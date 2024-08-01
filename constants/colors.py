@@ -14,4 +14,3 @@ class Color(Enum):
     GRAY = (128, 128, 128)
     PINK = (255, 100, 250)
     BROWN = (84, 65, 44)
-    TRADEWIND = (95, 182, 184)
