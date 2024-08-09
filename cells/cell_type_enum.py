@@ -38,16 +38,8 @@ class CellTypeCatalog(Enum):
         cells = importlib.import_module(".cell_types", "cells")
 
         obj.cell_type__map = {
-            'EmptyCell': cells.EmptyCell,
-            'EnergyCell': cells.EnergyCell,
-            'GreenCell': cells.GreenCell,
-            'RedCell': cells.RedCell,
-            'PurpleCell': cells.PurpleCell,
-            'YellowCell': cells.YellowCell,
-            'DeadCell': cells.DeadCell,
-            'DeadRedCell': cells.DeadRedCell,
-            'PinkCell': cells.PinkCell,
-            'OrangeCell': cells.OrangeCell,
+            cell: cells.__dict__.get(cell, None)
+            for cell in cells.__dict__.get('__all__', [])
         }
         return obj
 

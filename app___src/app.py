@@ -53,18 +53,17 @@ class App:
                     [x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE],
                 )
 
-    def recalculate_cells__iteration(self) -> Matrix:
+    def recalculate_cells__iteration(self) -> None:
         """
         The recalculate_cells__iteration method calculates the next generation of cells.
 
         Returns:
             Matrix: The next generation of cells.
         """
-        temp_res_cells: Matrix = [
+        self.cells = [
             [self.iteration_behavior(self.cells[x][y]) for y in range(0, self.app_width // self.cell_size)]
             for x in range(0, self.app_height // self.cell_size)
         ]
-        return temp_res_cells
 
     def iteration_behavior(self, watched_cell: TCell) -> TCell:
         """
@@ -103,14 +102,16 @@ class App:
 
             pg.display.update()
 
-            self.cells = self.recalculate_cells__iteration()
+            self.recalculate_cells__iteration()
 
             self.iterations += 1
 
-    @staticmethod
-    def exit_game():
+    def exit_game(self):
+        print(f"iterations={self.iterations}")
         pg.quit()
         sys.exit(0)
 
     def start_game(self):
+        print(f"iterations={self.iterations}")
+        self.iterations = 0
         self.cells: Matrix = field_cells_generator(self.root, cell_size=self.cell_size)
