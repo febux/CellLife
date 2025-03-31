@@ -1,8 +1,8 @@
 from typing import Dict
 
-from cells.cell_types.abstract_cell import BaseCell, TCell
+from cells.cell_types.abstract_cell import BaseCell
 from constants.colors import Color
-from constants.type_alias import Matrix, Vector
+from constants.type_alias import Matrix, Vector, TCell
 
 
 class EmptyCell(BaseCell):
@@ -16,7 +16,7 @@ class EmptyCell(BaseCell):
         pass
 
     def cell_iteration_behavior(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
-        from cells.cell_type_enum import CellTypeCatalog
+        from cells.cell_type_catalog import CellTypeCatalog
 
         for neighbor_type, neighbor_type_amount in neighbors.items():
             neighbor_type_cls = CellTypeCatalog(neighbor_type).class_

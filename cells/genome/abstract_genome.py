@@ -25,3 +25,6 @@ class BaseGenome:
     cell_boost_rate: Optional[float] = None
     energy_consumption_rate: Optional[float] = None
     poison_rate: Optional[float] = None
+
+    mutation_chance: Optional[float] = None
+    mutated_cell: Optional[str] = None

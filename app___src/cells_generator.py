@@ -2,7 +2,7 @@ import random
 
 from pygame import Surface, SurfaceType
 
-from cells.cell_type_enum import CellTypeCatalog
+from cells.cell_type_catalog import CellTypeCatalog
 from constants.constants import POPULATION, CELL_SIZE
 from constants.type_alias import Matrix
 

@@ -7,9 +7,9 @@ HEIGHT = 900
 ENERGY_ITERATION_VALUE = 10
 
 POPULATION: Population = Population(
-    empty_cell__population=300,
+    empty_cell__population=70,
     energy_cells__population=10,
-    green_cells__population=20,
-    red_cells__population=20,
+    green_cells__population=10,
+    red_cells__population=10,
 )
 

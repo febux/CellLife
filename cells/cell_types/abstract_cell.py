@@ -1,11 +1,41 @@
+import random
 from abc import ABC, abstractmethod
-
-from typing import List, Tuple, Optional, Dict, TypeVar
+from typing import List, Tuple, Optional, Dict
 
 from cells.genome.abstract_genome import BaseGenome
 from constants import Color, CELL_SIZE
+from constants.type_alias import TCell
 
-TCell = TypeVar("TCell", bound="Cell")
+
+class BaseMutationMixin:
+    @classmethod
+    def try_cell_mutation(cls, x: int, y: int):
+        """
+        Attempt to mutate a cell based on its genome's mutation chance.
+
+        This method checks if the cell's genome has a mutation chance and a specified
+        mutated cell type. If so, it attempts to create either the original cell type
+        or the mutated cell type based on the mutation chance.
+
+        Args:
+            cls: The class on which this method is called.
+            x (int): The x-coordinate for the cell.
+            y (int): The y-coordinate for the cell.
+
+        Returns:
+            An instance of either the original cell type or the mutated cell type,
+            based on the mutation chance. If mutation is not possible or fails,
+            it returns an instance of the original cell type.
+        """
+        from cells.cell_type_catalog import CellTypeCatalog
+
+        if cls.genome.mutation_chance and cls.genome.mutated_cell:
+            mutation_chance = cls.genome.mutation_chance * 100
+            return random.choices(
+                [cls(x, y), CellTypeCatalog[cls.genome.mutated_cell].class_(x, y)],
+                weights=(100, mutation_chance)
+            )[0]
+        return cls(x, y)
 
 
 class BaseCell(ABC):
@@ -19,7 +49,7 @@ class BaseCell(ABC):
         size (int): size of the cell type
         energy_value (int): current energy value of the cell type
         energy_capacity (int): maximum energy capacity of the cell
-        neighbor_positions (Tuple[Tuple[int, int]]): array of neighbors' positions over the cell type
+        neighbor_positions (Tuple[Tuple[int, int], ...]): array of neighbors' positions over the cell type
         genome (Optional[BaseGenome]): the genome of the cell
 
     """
@@ -33,7 +63,9 @@ class BaseCell(ABC):
 
     genome: Optional[BaseGenome] = None
 
-    def __init__(self, x: int, y: int, color: Color):
+    __slots__ = ("x", "y", "color", "energy_capacity")
+
+    def __init__(self, x: int, y: int, color: Color = None):
         """
         Initialize a new Cell instance.
 

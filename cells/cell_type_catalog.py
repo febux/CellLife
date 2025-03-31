@@ -2,8 +2,7 @@ from enum import Enum
 import importlib
 from typing import Type
 
-from cells.cell_types.abstract_cell import TCell
-from constants.type_alias import CellArray
+from constants.type_alias import CellArray, TCell
 
 
 class CellTypeCatalog(Enum):
@@ -36,7 +35,6 @@ class CellTypeCatalog(Enum):
         obj = object.__new__(cls)
 
         cells = importlib.import_module(".cell_types", "cells")
-
         obj.cell_type__map = {
             cell: cells.__dict__.get(cell, None)
             for cell in cells.__dict__.get('__all__', [])

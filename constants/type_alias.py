@@ -1,6 +1,7 @@
-from typing import List, TypeAlias, Tuple
+from typing import List, TypeAlias, Tuple, TypeVar
 
-from cells.cell_types.abstract_cell import TCell
+
+TCell = TypeVar("TCell", bound="Cell")
 
 Vector: TypeAlias = List[TCell]
 Matrix: TypeAlias = List[Vector]

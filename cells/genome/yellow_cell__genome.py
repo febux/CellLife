@@ -10,5 +10,8 @@ class YellowCellGenome(BaseGenome):
     neighbors_to_reproduction: int = 3
 
     energy_boost_rate: float = 1.8
-    energy_consumption_rate: float = 1.0
+    energy_consumption_rate: float = 0.7
     poison_rate: float = 1.2
+
+    mutation_chance = 0.07
+    mutated_cell = "OrangeCell"

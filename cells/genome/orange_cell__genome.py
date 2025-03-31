@@ -10,5 +10,5 @@ class OrangeCellGenome(BaseGenome):
     neighbors_to_reproduction: int = 3
 
     energy_boost_rate: float = 1.9
-    energy_consumption_rate: float = 1.2
+    energy_consumption_rate: float = 0.6
     poison_rate: float = 1.0

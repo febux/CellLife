@@ -1,13 +1,13 @@
 import random
 from typing import Dict
 
-from cells.cell_types.abstract_cell import BaseCell, TCell
+from cells.cell_types.abstract_cell import BaseCell, BaseMutationMixin
 from cells.genome import PurpleCellGenome
 from constants import Color
-from constants.type_alias import Matrix, Vector
+from constants.type_alias import Matrix, Vector, TCell
 
 
-class PurpleCell(BaseCell):
+class PurpleCell(BaseCell, BaseMutationMixin):
     energy_value = 20
     genome = PurpleCellGenome
 
@@ -15,14 +15,8 @@ class PurpleCell(BaseCell):
         super().__init__(x, y, color)
         self.energy_capacity = self.genome.energy_capacity
 
-    @classmethod
-    def try_cell_mutation(cls, x: int, y: int):
-        from cells.cell_type_enum import CellTypeCatalog
-
-        return random.choices([cls(x, y), CellTypeCatalog.PinkCell.class_(x, y)], weights=(100, 4))[0]
-
     def check_energy_cells(self, cells: Matrix) -> int:
-        from cells.cell_type_enum import CellTypeCatalog
+        from cells.cell_type_catalog import CellTypeCatalog
 
         energy: int = 0
         for neighbor_position in self.neighbor_positions:
@@ -41,7 +35,7 @@ class PurpleCell(BaseCell):
         return energy
 
     def recalculate_cell_energy(self, cells: Matrix) -> TCell:
-        from cells.cell_type_enum import CellTypeCatalog
+        from cells.cell_type_catalog import CellTypeCatalog
 
         if self.energy_capacity <= 0:
             return CellTypeCatalog.DeadCell.class_(self.x, self.y)
@@ -57,7 +51,7 @@ class PurpleCell(BaseCell):
             return self
 
     def cell_iteration_behavior(self, neighbors: Dict[str, Vector], cells: Matrix) -> TCell:
-        from cells.cell_type_enum import CellTypeCatalog
+        from cells.cell_type_catalog import CellTypeCatalog
 
         for neighbor_type, neighbor_type_amount in neighbors.items():
             neighbor_type_cls = CellTypeCatalog(neighbor_type).class_
