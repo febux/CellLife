@@ -1,4 +1,3 @@
-import random
 from typing import Dict
 
 from cells.cell_types.abstract_cell import BaseCell, BaseMutationMixin

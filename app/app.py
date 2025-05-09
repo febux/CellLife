@@ -3,7 +3,7 @@ import sys
 import pygame as pg
 from pygame import Surface, SurfaceType, time
 
-from app___src.cells_generator import field_cells_generator
+from app.cells_generator import field_cells_generator
 from cells.cell_types.abstract_cell import TCell
 from constants.colors import Color
 from constants.constants import CELL_SIZE, FPS

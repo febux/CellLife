@@ -1,4 +1,4 @@
-from app___src.population import Population
+from app.population import Population
 
 CELL_SIZE = 5
 FPS = 1000

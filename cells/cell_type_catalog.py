@@ -6,6 +6,24 @@ from constants.type_alias import CellArray, TCell
 
 
 class CellTypeCatalog(Enum):
+    """
+    An enumeration of cell types used in the simulation.
+
+    This class defines various cell types and provides methods to categorize and retrieve
+    different groups of cells based on their properties and behaviors.
+
+    Attributes:
+        EmptyCell (str): Represents an empty cell.
+        EnergyCell (str): Represents a cell containing energy.
+        GreenCell (str): Represents a green cell (typically a plant or producer).
+        RedCell (str): Represents a red cell (typically a predator).
+        PurpleCell (str): Represents a purple cell (typically a predator).
+        YellowCell (str): Represents a yellow cell (typically an herbivore).
+        DeadCell (str): Represents a dead cell.
+        DeadRedCell (str): Represents a dead red cell (typically poisonous).
+        PinkCell (str): Represents a pink cell (typically a super predator).
+        OrangeCell (str): Represents an orange cell (typically an herbivore).
+    """
     EmptyCell = 'EmptyCell'
     EnergyCell = 'EnergyCell'
     GreenCell = 'GreenCell'
